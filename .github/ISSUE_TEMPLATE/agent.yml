@@ -1,0 +1,46 @@
+name: Agent Definition
+description: Register a new persistent AI agent in the Swarm OS
+title: "[Agent] "
+labels: ["type:agent"]
+body:
+  - type: input
+    id: agent-name
+    attributes:
+      label: Agent Name
+      description: Short unique name for this agent
+      placeholder: e.g. Coder, Researcher, Deployer
+    validations:
+      required: true
+  - type: textarea
+    id: role
+    attributes:
+      label: Role & Responsibilities
+      description: What this agent does
+      placeholder: Primary responsibilities, tools it uses, boundaries
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Current Status
+      options:
+        - Idle
+        - Active
+        - Blocked
+        - Offline
+    validations:
+      required: true
+  - type: textarea
+    id: current-task
+    attributes:
+      label: Current Task (if any)
+      description: Link or description of what it is working on right now
+  - type: input
+    id: model
+    attributes:
+      label: Model / Backend
+      placeholder: e.g. Grok, Claude, local LLM, etc.
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes / Configuration
