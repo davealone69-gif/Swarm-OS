@@ -1,0 +1,41 @@
+name: Project
+description: Track a major project or initiative in Swarm OS
+title: "[Project] "
+labels: ["type:project"]
+body:
+  - type: input
+    id: project-name
+    attributes:
+      label: Project Name
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description & Goals
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0
+        - P1
+        - P2
+        - P3
+    validations:
+      required: true
+  - type: input
+    id: owner
+    attributes:
+      label: Owner / Lead Agent
+  - type: input
+    id: related-repo
+    attributes:
+      label: Related Repository
+      placeholder: owner/repo or URL
+  - type: textarea
+    id: milestones
+    attributes:
+      label: Key Milestones
