@@ -1,0 +1,36 @@
+name: Build / Release
+description: Track a build, deployment, or release
+title: "[Build/Release] "
+labels: ["type:build"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Type
+      options:
+        - Build
+        - Release
+        - Deployment
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version / Tag
+  - type: input
+    id: related-repo
+    attributes:
+      label: Related Repository
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0
+        - P1
+        - P2
+        - P3
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes / Changelog / Status
