@@ -1,0 +1,24 @@
+# Gradle
+.gradle/
+build/
+local.properties
+
+# Android Studio
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Vendor repo: keep POMs and metadata, but NOT jars (commit separately or use LFS)
+# To include jars in git, remove the lines below.
+libs/maven-repo/**/*.jar
+libs/maven-repo/**/*.aar
+libs/maven-repo/**/*.zip
+# Uncomment to also exclude sources/javadoc jars:
+# libs/maven-repo/**/*-sources.jar
+# libs/maven-repo/**/*-javadoc.jar
+
+# OS
+.DS_Store
+Thumbs.db

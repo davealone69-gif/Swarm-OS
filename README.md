@@ -93,3 +93,36 @@ Create one issue per persistent AI agent using the Agent template. Keep them ope
 ---
 
 This foundation expands over time. Start simple. Add automation later.
+
+---
+
+## Android Build — Offline / Vendored AGP Setup
+
+This repo uses **Option A: Local Maven Repository** for fully offline Android Gradle Plugin (AGP) builds. Unlike `flatDir`, a local Maven-layout repository supports plugin marker resolution, POM-based transitive dependency fetching, and `maven-metadata.xml` — everything Gradle needs.
+
+### One-time setup (requires internet)
+
+```bash
+# Requires JDK 17+ and Maven (mvn) in PATH
+./scripts/vendor-agp.sh
+```
+
+This populates `libs/maven-repo/` with AGP 8.4.2 and all transitive dependencies. Commit the populated directory (jars excluded by `.gitignore` — use Git LFS or a binary artifact store for those).
+
+### Offline builds
+
+```bash
+./gradlew assembleDebug --offline
+./gradlew assembleRelease --offline
+```
+
+### Updating AGP
+
+1. Edit `gradle/libs.versions.toml` → change `agp = "X.Y.Z"`
+2. Edit `scripts/vendor-agp.sh` → change `AGP_VERSION="X.Y.Z"`
+3. Re-run `./scripts/vendor-agp.sh`
+4. Commit the updated `libs/maven-repo/`
+
+### Why not `flatDir`?
+
+`flatDir` repositories do not support Maven metadata, POM transitive dependency resolution, or plugin marker artifacts. See `libs/maven-repo/README.txt` for details.
