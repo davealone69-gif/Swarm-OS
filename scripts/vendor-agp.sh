@@ -13,7 +13,9 @@
 #
 # To update AGP, change AGP_VERSION below and re-run.
 
-set -euo pipefail
+# Exit on unset variables and pipe failures, but NOT on individual command errors
+# (we handle errors per-artifact below so one failure doesn't abort everything).
+set -uo pipefail
 
 AGP_VERSION="8.4.2"
 KOTLIN_VERSION="1.9.24"
@@ -38,6 +40,17 @@ REMOTE_REPOS=(
 echo "==> Vendoring AGP ${AGP_VERSION} into ${REPO_DIR}"
 mkdir -p "${REPO_DIR}"
 
+# Verify network access before spending time on resolution
+echo "--> Checking network access to dl.google.com..."
+if ! curl -sf --max-time 5 "https://dl.google.com/dl/android/maven2/" -o /dev/null; then
+  echo ""
+  echo "ERROR: Cannot reach dl.google.com. This script must be run on a machine"
+  echo "       with internet access. Run it once online, commit libs/maven-repo/,"
+  echo "       then all future builds can use:  ./gradlew --offline"
+  exit 1
+fi
+echo "    Network OK."
+
 # Build -DremoteRepositories argument for maven dependency:get
 REPO_ARGS=""
 for repo in "${REMOTE_REPOS[@]}"; do
@@ -58,7 +71,7 @@ for artifact in "${ARTIFACTS[@]}"; do
     -DremoteRepositories="${REPO_ARGS}" \
     -Ddest="${REPO_DIR}" \
     -Dtransitive=true \
-    --quiet
+    --quiet || { echo "    WARNING: resolution failed for ${artifact} — skipping"; continue; }
 
   # Copy resolved artifacts from local Maven cache into our repo layout
   LOCAL_CACHE="${HOME}/.m2/repository"
