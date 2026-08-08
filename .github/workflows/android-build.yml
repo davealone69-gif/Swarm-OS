@@ -28,6 +28,13 @@ jobs:
       - name: Install Maven (for vendor script)
         run: sudo apt-get update && sudo apt-get install -y maven
 
+      - name: Debug network (helps diagnose CI connectivity)
+        run: |
+          echo "=== DNS / connectivity check ==="
+          curl -sI --connect-timeout 10 --max-time 15 https://dl.google.com/ || true
+          curl -sI --connect-timeout 10 --max-time 15 https://repo1.maven.org/ || true
+          echo "=== end ==="
+
       - name: Vendor AGP into local Maven repo
         run: |
           chmod +x ./scripts/vendor-agp.sh

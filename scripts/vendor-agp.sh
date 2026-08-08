@@ -40,11 +40,24 @@ REMOTE_REPOS=(
 echo "==> Vendoring AGP ${AGP_VERSION} into ${REPO_DIR}"
 mkdir -p "${REPO_DIR}"
 
-# Verify network access before spending time on resolution
-echo "--> Checking network access to dl.google.com..."
-if ! curl -sf --max-time 5 "https://dl.google.com/dl/android/maven2/" -o /dev/null; then
+# Verify network access before spending time on resolution.
+# Use a more resilient check: try multiple endpoints, longer timeout, follow redirects.
+echo "--> Checking network access..."
+NETWORK_OK=false
+for url in \
+  "https://dl.google.com/dl/android/maven2/" \
+  "https://repo1.maven.org/maven2/" \
+  "https://plugins.gradle.org/m2/"; do
+  if curl -sL --connect-timeout 10 --max-time 20 -o /dev/null -w "%{http_code}" "$url" 2>/dev/null | grep -qE '^(200|301|302|403|404)$'; then
+    echo "    Reachable: $url"
+    NETWORK_OK=true
+    break
+  fi
+done
+
+if [[ "$NETWORK_OK" != "true" ]]; then
   echo ""
-  echo "ERROR: Cannot reach dl.google.com. This script must be run on a machine"
+  echo "ERROR: Cannot reach Google/Maven repositories. This script must be run on a machine"
   echo "       with internet access. Run it once online, commit libs/maven-repo/,"
   echo "       then all future builds can use:  ./gradlew --offline"
   exit 1
