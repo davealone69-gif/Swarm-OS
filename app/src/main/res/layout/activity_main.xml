@@ -10,151 +10,138 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="20dp">
 
         <!-- Header -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Swarm OS"
-            android:textSize="32sp"
+            android:text="Swarm Builder"
+            android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="#58A6FF"
-            android:letterSpacing="0.05" />
+            android:textColor="#58A6FF" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Command centre for your AI agent ecosystem"
-            android:textSize="15sp"
+            android:layout_marginTop="2dp"
+            android:text="Prompt-driven multi-agent build loop"
+            android:textSize="14sp"
             android:textColor="#8B949E" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="#21262D" />
 
-        <!-- Status row -->
+        <!-- Task input -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SYSTEM STATUS"
-            android:textSize="12sp"
+            android:text="TASK"
+            android:textSize="11sp"
             android:textStyle="bold"
             android:textColor="#8B949E"
-            android:letterSpacing="0.1" />
+            android:letterSpacing="0.08" />
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/input_task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="8dp"
+            android:minHeight="88dp"
+            android:gravity="top|start"
+            android:background="#161B22"
+            android:padding="14dp"
+            android:hint="Describe what the swarm should build…"
+            android:textColorHint="#484F58"
+            android:textColor="#E6EDF3"
+            android:textSize="15sp"
+            android:inputType="textMultiLine" />
 
-            <TextView
-                android:id="@+id/status_online"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#161B22"
-                android:padding="16dp"
-                android:text="● ONLINE"
-                android:textColor="#3FB950"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:gravity="center" />
-
-            <View
-                android:layout_width="12dp"
-                android:layout_height="0dp" />
-
-            <TextView
-                android:id="@+id/status_agents"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#161B22"
-                android:padding="16dp"
-                android:text="0 agents"
-                android:textColor="#E6EDF3"
-                android:textSize="14sp"
-                android:gravity="center" />
-        </LinearLayout>
-
-        <!-- Board columns -->
+        <!-- Topology -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="BOARD"
-            android:textSize="12sp"
+            android:layout_marginTop="20dp"
+            android:text="TOPOLOGY"
+            android:textSize="11sp"
             android:textStyle="bold"
             android:textColor="#8B949E"
-            android:letterSpacing="0.1" />
+            android:letterSpacing="0.08" />
 
-        <LinearLayout
-            android:id="@+id/board_container"
+        <Spinner
+            android:id="@+id/spinner_topology"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="#161B22"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
+
+        <!-- Agents -->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="20dp"
+            android:text="AGENTS + SYSTEM PROMPTS"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:textColor="#8B949E"
+            android:letterSpacing="0.08" />
+
+        <LinearLayout
+            android:id="@+id/agents_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="vertical" />
 
-        <!-- Quick actions -->
+        <!-- Run -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_run_swarm"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:text="▶  Run Swarm"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            app:backgroundTint="#238636"
+            app:cornerRadius="10dp" />
+
+        <!-- Output log -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="QUICK ACTIONS"
-            android:textSize="12sp"
+            android:layout_marginTop="24dp"
+            android:text="SWARM OUTPUT"
+            android:textSize="11sp"
             android:textStyle="bold"
             android:textColor="#8B949E"
-            android:letterSpacing="0.1" />
+            android:letterSpacing="0.08" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_new_agent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="+ New Agent"
-            android:textAllCaps="false"
-            app:backgroundTint="#238636"
-            app:cornerRadius="8dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_new_project"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="+ New Project"
-            android:textAllCaps="false"
-            android:textColor="#58A6FF"
-            app:strokeColor="#30363D"
-            app:cornerRadius="8dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_report_bug"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Report Bug"
-            android:textAllCaps="false"
-            android:textColor="#F85149"
-            app:strokeColor="#30363D"
-            app:cornerRadius="8dp" />
-
-        <!-- Footer -->
         <TextView
-            android:id="@+id/footer_version"
+            android:id="@+id/output_log"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
+            android:minHeight="160dp"
+            android:background="#161B22"
+            android:padding="14dp"
+            android:textColor="#E6EDF3"
+            android:textSize="13sp"
+            android:fontFamily="monospace"
+            android:text="Ready. Enter a task and run the swarm." />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="v1.0 · Offline AGP build"
-            android:textSize="12sp"
+            android:text="v1.0 · Prompt Swarm Builder"
+            android:textSize="11sp"
             android:textColor="#484F58" />
 
     </LinearLayout>
