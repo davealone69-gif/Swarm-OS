@@ -28,6 +28,19 @@ jobs:
       - name: Install Maven (for vendor script)
         run: sudo apt-get update && sudo apt-get install -y maven
 
+      - name: Bootstrap missing gradle-wrapper.jar
+        run: |
+          if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
+            echo "gradle-wrapper.jar missing — downloading..."
+            mkdir -p gradle/wrapper
+            # Official jar from the Gradle 8.7 tag
+            curl -fsSL -o gradle/wrapper/gradle-wrapper.jar \
+              "https://github.com/gradle/gradle/raw/v8.7.0/gradle/wrapper/gradle-wrapper.jar"
+            ls -la gradle/wrapper/
+          else
+            echo "gradle-wrapper.jar already present"
+          fi
+
       - name: Debug network (helps diagnose CI connectivity)
         run: |
           echo "=== DNS / connectivity check ==="
